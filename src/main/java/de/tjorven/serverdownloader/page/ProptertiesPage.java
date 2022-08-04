@@ -24,7 +24,7 @@ public class ProptertiesPage extends SDPanel implements ActionListener {
     JCheckBox spawnMonsters;
 
     public ProptertiesPage(SDPanel before) {
-        super("<html>Properties<br/><hr></html>", before);
+        super("Properties", before);
 
         JButton selectButton = new JButton("Next");
         selectButton.addActionListener(this);
@@ -42,7 +42,6 @@ public class ProptertiesPage extends SDPanel implements ActionListener {
         serverPort = new JTextField("25565");
         serverPort.setBounds(140, 180, 300, 30);
         add(serverPort);
-
         JLabel maxPlayersLabel = new JLabel("MaxPlayers", SwingConstants.LEFT);
         maxPlayersLabel.setBounds(40, 220, 90, 30);
         add(maxPlayersLabel);
@@ -70,6 +69,7 @@ public class ProptertiesPage extends SDPanel implements ActionListener {
         pvp = new JCheckBox("PvP", true);
         pvp.setBounds(60, 350, 120, 30);
         add(pvp);
+
         allowNether = new JCheckBox("Allow Nether", true);
         allowNether.setBounds(190, 350, 120, 30);
         add(allowNether);
@@ -90,6 +90,7 @@ public class ProptertiesPage extends SDPanel implements ActionListener {
         updateUI();
         Logger.getLogger().info("PropertiesPage loaded");
     }
+
 
     /**
      * Invoked when an action occurs.

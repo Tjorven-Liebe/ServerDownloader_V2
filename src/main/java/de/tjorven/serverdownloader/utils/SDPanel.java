@@ -4,6 +4,7 @@ import de.tjorven.serverdownloader.ServerDownloader;
 
 import javax.swing.*;
 import java.awt.*;
+
 public class SDPanel extends JPanel {
 
     String pageTitle;
@@ -16,14 +17,18 @@ public class SDPanel extends JPanel {
     public SDPanel(String pageTitle, SDPanel lastPage) {
         if (lastPage != null) {
             ServerDownloader.frame.remove(lastPage);
-            JButton button = new JButton("Back");
+            JButton button = new JButton();
+            button.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/circle-left-solid.png"))));
+            button.setBackground(null);
+            button.setForeground(null);
+            button.setBorder(new TextBubbleBorder(null, 0, 50, 0));
             button.addActionListener(event -> {
                 ServerDownloader.frame.remove(this);
                 ServerDownloader.frame.add(lastPage);
                 updateUI();
                 lastPage.updateUI();
             });
-            button.setBounds(20, 25, 80, 50);
+            button.setBounds(20, 25, 50, 50);
             add(button);
         }
         this.pageTitle = pageTitle;

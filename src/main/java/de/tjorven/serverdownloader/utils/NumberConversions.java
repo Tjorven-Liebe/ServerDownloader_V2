@@ -4,7 +4,8 @@ package de.tjorven.serverdownloader.utils;
  * Utils for casting number types to other number types
  */
 public final class NumberConversions {
-    private NumberConversions() {}
+    private NumberConversions() {
+    }
 
     public static int floor(double num) {
         final int floor = (int) num;
@@ -30,9 +31,8 @@ public final class NumberConversions {
         }
 
         try {
-            return Integer.valueOf(object.toString());
-        } catch (NumberFormatException e) {
-        } catch (NullPointerException e) {
+            return Integer.parseInt(object.toString());
+        } catch (NumberFormatException | NullPointerException ignored) {
         }
         return 0;
     }
@@ -43,9 +43,8 @@ public final class NumberConversions {
         }
 
         try {
-            return Float.valueOf(object.toString());
-        } catch (NumberFormatException e) {
-        } catch (NullPointerException e) {
+            return Float.parseFloat(object.toString());
+        } catch (NumberFormatException | NullPointerException ignored) {
         }
         return 0;
     }
@@ -56,9 +55,8 @@ public final class NumberConversions {
         }
 
         try {
-            return Double.valueOf(object.toString());
-        } catch (NumberFormatException e) {
-        } catch (NullPointerException e) {
+            return Double.parseDouble(object.toString());
+        } catch (NumberFormatException | NullPointerException ignored) {
         }
         return 0;
     }
@@ -69,9 +67,8 @@ public final class NumberConversions {
         }
 
         try {
-            return Long.valueOf(object.toString());
-        } catch (NumberFormatException e) {
-        } catch (NullPointerException e) {
+            return Long.parseLong(object.toString());
+        } catch (NumberFormatException | NullPointerException ignored) {
         }
         return 0;
     }

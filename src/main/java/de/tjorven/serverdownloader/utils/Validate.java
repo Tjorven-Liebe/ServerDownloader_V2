@@ -101,7 +101,7 @@ public class Validate {
     public static void noNullElements(Object[] array, String message) {
         notNull(array);
 
-        for(int i = 0; i < array.length; ++i) {
+        for (int i = 0; i < array.length; ++i) {
             if (array[i] == null) {
                 throw new IllegalArgumentException(message);
             }
@@ -112,7 +112,7 @@ public class Validate {
     public static void noNullElements(Object[] array) {
         notNull(array);
 
-        for(int i = 0; i < array.length; ++i) {
+        for (int i = 0; i < array.length; ++i) {
             if (array[i] == null) {
                 throw new IllegalArgumentException("The validated array contains null element at index: " + i);
             }
@@ -124,7 +124,7 @@ public class Validate {
         notNull(collection);
         Iterator it = collection.iterator();
 
-        while(it.hasNext()) {
+        while (it.hasNext()) {
             if (it.next() == null) {
                 throw new IllegalArgumentException(message);
             }
@@ -136,7 +136,7 @@ public class Validate {
         notNull(collection);
         int i = 0;
 
-        for(Iterator it = collection.iterator(); it.hasNext(); ++i) {
+        for (Iterator it = collection.iterator(); it.hasNext(); ++i) {
             if (it.next() == null) {
                 throw new IllegalArgumentException("The validated collection contains null element at index: " + i);
             }
@@ -149,7 +149,7 @@ public class Validate {
         notNull(clazz);
         Iterator it = collection.iterator();
 
-        while(it.hasNext()) {
+        while (it.hasNext()) {
             if (!clazz.isInstance(it.next())) {
                 throw new IllegalArgumentException(message);
             }
@@ -162,7 +162,7 @@ public class Validate {
         notNull(clazz);
         int i = 0;
 
-        for(Iterator it = collection.iterator(); it.hasNext(); ++i) {
+        for (Iterator it = collection.iterator(); it.hasNext(); ++i) {
             if (!clazz.isInstance(it.next())) {
                 throw new IllegalArgumentException("The validated collection contains an element not of type " + clazz.getName() + " at index: " + i);
             }

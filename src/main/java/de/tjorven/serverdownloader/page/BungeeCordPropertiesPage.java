@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 
 public class BungeeCordPropertiesPage extends SDPanel implements ActionListener {
     JTextField bungeePort;
-    JSpinner spinner;
+
     public BungeeCordPropertiesPage(SDPanel last) {
         super("BungeeProperties", last);
         JButton selectButton = new JButton("Next");
@@ -24,11 +24,10 @@ public class BungeeCordPropertiesPage extends SDPanel implements ActionListener 
         bungeePort = new JTextField("25565");
         bungeePort.setBounds(140, 100, 300, 30);
         add(bungeePort);
-
         JLabel tabList = new JLabel("Tablist", SwingConstants.LEFT);
         tabList.setBounds(40, 150, 90, 30);
         add(tabList);
-        JComboBox<String> jComboBox = new JComboBox<>(new String[] {"GLOBAL_PING", "GLOBAL", "SERVER"});
+        JComboBox<String> jComboBox = new JComboBox<>(new String[]{"GLOBAL_PING", "GLOBAL", "SERVER"});
         jComboBox.setSelectedIndex(2);
         jComboBox.setBounds(140, 150, 300, 30);
         add(jComboBox);

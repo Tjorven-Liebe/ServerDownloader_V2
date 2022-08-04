@@ -1,18 +1,12 @@
 package de.tjorven.serverdownloader.page;
 
 import de.tjorven.serverdownloader.utils.SDPanel;
-import de.tjorven.serverdownloader.utils.TextBubbleBorder;
 import de.tjorven.serverdownloader.utils.Util;
 import de.tjorven.serverdownloader.utils.logger.Logger;
-import lombok.extern.java.Log;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
 
 public class BungeeCordSetupPage extends SDPanel implements ActionListener {
 
@@ -50,12 +44,10 @@ public class BungeeCordSetupPage extends SDPanel implements ActionListener {
             }
             maxModel.setMaximum(Util.serverAndName.size());
             serverSpinner.setModel(maxModel);
-            if (Integer.parseInt(serverSpinner.getValue().toString())>value) {
+            if (Integer.parseInt(serverSpinner.getValue().toString()) > value) {
                 serverSpinner.setValue(value);
             }
-            Util.serverAndName.forEach((integer, string) -> {
-                Logger.getLogger().emergency(integer + ":" + string);
-            });
+            Util.serverAndName.forEach((integer, string) -> Logger.getLogger().emergency(integer + ":" + string));
         });
 
         serverSpinner.setBounds(240, 150, 90, 30);
@@ -65,16 +57,12 @@ public class BungeeCordSetupPage extends SDPanel implements ActionListener {
         field.setBounds(40, 150, 180, 30);
         add(field);
 
-        serverSpinner.addChangeListener(event -> {
-            field.setText(Util.serverAndName.get(Integer.parseInt(serverSpinner.getValue().toString())));
-        });
+        serverSpinner.addChangeListener(event -> field.setText(Util.serverAndName.get(Integer.parseInt(serverSpinner.getValue().toString()))));
 
         JButton set = new JButton("Set");
         set.setBounds(340, 150, 50, 30);
         add(set);
-        set.addActionListener(event -> {
-            Util.serverAndName.put(Integer.parseInt(serverSpinner.getValue().toString()), field.getText());
-        });
+        set.addActionListener(event -> Util.serverAndName.put(Integer.parseInt(serverSpinner.getValue().toString()), field.getText()));
 
         JLabel label = new JLabel("Subserver count");
         label.setBounds(40, 100, 200, 30);

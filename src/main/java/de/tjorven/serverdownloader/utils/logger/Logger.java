@@ -33,6 +33,7 @@ public class Logger {
         for (Object object : objects)
             System.out.println(ConsoleColor.fromTag(date + " §r[§3OBJECT§r] §r" + object.toString()));
     }
+
     public void info(String... string) {
         for (String toLog : string)
             System.out.println(ConsoleColor.fromTag(date + " §r[§1INFO§r] §r" + toLog));

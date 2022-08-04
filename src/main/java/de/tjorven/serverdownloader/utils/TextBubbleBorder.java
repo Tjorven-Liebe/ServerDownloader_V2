@@ -7,16 +7,16 @@ import java.awt.geom.RoundRectangle2D;
 
 public
 class TextBubbleBorder extends AbstractBorder {
-    private Color color;
+    private final Color color;
+    private final int strokePad;
+    private final int pointerPad = 4;
+    RenderingHints hints;
     private int thickness = 4;
     private int radii = 8;
     private int pointerSize = 7;
     private Insets insets = null;
     private BasicStroke stroke = null;
-    private int strokePad;
-    private int pointerPad = 4;
     private boolean left = true;
-    RenderingHints hints;
 
     public TextBubbleBorder(
             Color color) {
@@ -70,8 +70,8 @@ class TextBubbleBorder extends AbstractBorder {
         int bottomLineY = height - thickness - pointerSize;
 
         RoundRectangle2D.Double bubble = new RoundRectangle2D.Double(
-                0 + strokePad,
-                0 + strokePad,
+                strokePad,
+                strokePad,
                 width - thickness,
                 bottomLineY,
                 radii,
@@ -114,10 +114,10 @@ class TextBubbleBorder extends AbstractBorder {
 
         // Paint the BG color of the parent, everywhere outside the clip
         // of the text bubble.
-        Component parent  = c.getParent();
-        if (parent!=null) {
+        Component parent = c.getParent();
+        if (parent != null) {
             Color bg = parent.getBackground();
-            Rectangle rect = new Rectangle(0,0,width, height);
+            Rectangle rect = new Rectangle(0, 0, width, height);
             Area borderRegion = new Area(rect);
             borderRegion.subtract(area);
             g2.setClip(borderRegion);

@@ -4,37 +4,34 @@ import de.tjorven.serverdownloader.ServerDownloader;
 import de.tjorven.serverdownloader.utils.SDPanel;
 import de.tjorven.serverdownloader.utils.TextBubbleBorder;
 import de.tjorven.serverdownloader.utils.Util;
+import de.tjorven.serverdownloader.utils.configuration.file.YamlConfiguration;
 import de.tjorven.serverdownloader.utils.logger.Logger;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 
 public class EndPage extends SDPanel {
-    /**
-     * Creates a new <code>JPanel</code> with a double buffer
-     * and a flow layout.
-     *
-     * @param lastPage
-     */
-    public EndPage(SDPanel lastPage) {
-        super("<html>EndPage<br/><hr></html>", lastPage);
-        JTextField installationField = new JTextField(System.getProperty("user.dir"));
-        JButton chooseInstallationFolder = new JButton("Choose");
-        chooseInstallationFolder.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
 
-                JFileChooser jFileChooser = new JFileChooser();
-                jFileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-                jFileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
-                jFileChooser.setDialogTitle("Choose an installation folder");
-                int returnVal = jFileChooser.showOpenDialog(installationField);
-                if (returnVal == JFileChooser.APPROVE_OPTION) {
-                    installationField.setText(jFileChooser.getSelectedFile().toString());
-                }
+    public EndPage(SDPanel lastPage) {
+        super("EndPage", lastPage);
+        File file = new File(System.getProperty("user.home") + "/AppData/Roaming/ServerDownloader/settings.yml");
+        YamlConfiguration configuration = YamlConfiguration.loadConfiguration(file);
+
+        JTextField installationField = new JTextField();
+        if (configuration.getString("downloadlocation") != null)
+            installationField.setText(configuration.getString("downloadlocation"));
+        else installationField.setText(System.getProperty("user.dir"));
+        JButton chooseInstallationFolder = new JButton("Choose");
+        chooseInstallationFolder.addActionListener(event -> {
+            JFileChooser jFileChooser = new JFileChooser();
+            jFileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            jFileChooser.setCurrentDirectory(new File(installationField.getText()));
+            jFileChooser.setDialogTitle("Choose an installation folder");
+            int returnVal = jFileChooser.showOpenDialog(installationField);
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                installationField.setText(jFileChooser.getSelectedFile().toString());
             }
         });
         installationField.setBounds(40, 100, 300, 50);
@@ -56,8 +53,13 @@ public class EndPage extends SDPanel {
                     ServerDownloader.frame.getWidth() / 2 - (300 / 2),
                     ServerDownloader.frame.getHeight() / 2 - (300 / 2), 300, 300);
             add(label);
+            configuration.set("downloadlocation", installationField.getText());
+            try {
+                configuration.save(file);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             updateUI();
-
         });
         add(accept);
         updateUI();

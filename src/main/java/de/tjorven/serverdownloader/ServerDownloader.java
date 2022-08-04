@@ -1,12 +1,15 @@
 package de.tjorven.serverdownloader;
 
-import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatNightOwlIJTheme;
 import de.tjorven.serverdownloader.page.StartPage;
+import de.tjorven.serverdownloader.utils.Util;
+import de.tjorven.serverdownloader.utils.command.CommandHandler;
+import de.tjorven.serverdownloader.utils.logger.Logger;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class ServerDownloader extends JFrame {
 
@@ -14,25 +17,33 @@ public class ServerDownloader extends JFrame {
     @Setter
     public static JFrame frame;
 
-    public ServerDownloader() {
-        setVisible(true);
+    public ServerDownloader() throws IOException {
+        frame = this;
+        try {
+            Util.setTheme(frame);
+        } catch (IOException | ClassNotFoundException | InstantiationException | IllegalAccessException |
+                 UnsupportedLookAndFeelException e) {
+            throw new RuntimeException(e);
+        }
         setSize(500, 600);
-        setTitle("ServerDownloader V2");
+        setTitle("ServerDownloader");
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/spigot-og.png")));
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        frame = this;
         new StartPage();
+        new CommandHandler();
         setLocationRelativeTo(null);
     }
 
-    public static void main(String[] args) {
-        FlatNightOwlIJTheme.setup();
-        try {
-            UIManager.setLookAndFeel(new FlatNightOwlIJTheme());
-        } catch (UnsupportedLookAndFeelException ignored) {
+    public static void main(String[] args) throws IOException {
+        if (!System.getProperty("os.name").startsWith("Windows")) {
+            ProcessBuilder processBuilder = new ProcessBuilder("/usr/bin/bash", "-c", "command -v screen");
+            if (new String(processBuilder.start().getInputStream().readAllBytes()).isEmpty()) {
+                Runtime.getRuntime().exec("sudo apt-get install screen");
+            }
+            new CommandHandler();
+        } else {
+            new ServerDownloader();
         }
-        new ServerDownloader();
     }
-
 }

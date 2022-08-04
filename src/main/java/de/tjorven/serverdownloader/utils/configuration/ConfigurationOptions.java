@@ -5,9 +5,9 @@ package de.tjorven.serverdownloader.utils.configuration;
  * Configuration}
  */
 public class ConfigurationOptions {
+    private final Configuration configuration;
     private char pathSeparator = '.';
     private boolean copyDefaults = false;
-    private final Configuration configuration;
 
     protected ConfigurationOptions(Configuration configuration) {
         this.configuration = configuration;

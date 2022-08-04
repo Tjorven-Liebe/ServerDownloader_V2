@@ -20,6 +20,88 @@ public class YamlConfiguration extends FileConfiguration {
     private final Representer yamlRepresenter = new YamlRepresenter();
     private final Yaml yaml = new Yaml(new YamlConstructor(), yamlRepresenter, yamlOptions);
 
+    /**
+     * Creates a new {@link YamlConfiguration}, loading from the given file.
+     * <p>
+     * Any errors loading the Configuration will be logged and then ignored.
+     * If the specified input is not a valid config, a blank config will be
+     * returned.
+     * <p>
+     * The encoding used may follow the system dependent default.
+     *
+     * @param file Input file
+     * @return Resulting configuration
+     * @throws IllegalArgumentException Thrown if file is null
+     */
+    public static YamlConfiguration loadConfiguration(File file) {
+        Validate.notNull(file, "File cannot be null");
+
+        YamlConfiguration config = new YamlConfiguration();
+
+        try {
+            config.load(file);
+        } catch (FileNotFoundException ex) {
+        } catch (IOException | InvalidConfigurationException ex) {
+            System.err.println(ex);
+        }
+
+        return config;
+    }
+
+    /**
+     * Creates a new {@link YamlConfiguration}, loading from the given stream.
+     * <p>
+     * Any errors loading the Configuration will be logged and then ignored.
+     * If the specified input is not a valid config, a blank config will be
+     * returned.
+     *
+     * @param stream Input stream
+     * @return Resulting configuration
+     * @throws IllegalArgumentException Thrown if stream is null
+     * @see #load(InputStream)
+     * @see #loadConfiguration(Reader)
+     * @deprecated does not properly consider encoding
+     */
+    @Deprecated
+    public static YamlConfiguration loadConfiguration(InputStream stream) {
+        Validate.notNull(stream, "Stream cannot be null");
+
+        YamlConfiguration config = new YamlConfiguration();
+
+        try {
+            config.load(stream);
+        } catch (IOException | InvalidConfigurationException ex) {
+            Logger.getLogger().error(ex);
+        }
+
+        return config;
+    }
+
+    /**
+     * Creates a new {@link YamlConfiguration}, loading from the given reader.
+     * <p>
+     * Any errors loading the Configuration will be logged and then ignored.
+     * If the specified input is not a valid config, a blank config will be
+     * returned.
+     *
+     * @param reader input
+     * @return resulting configuration
+     * @throws IllegalArgumentException Thrown if stream is null
+     */
+    public static YamlConfiguration loadConfiguration(Reader reader) {
+        Validate.notNull(reader, "Stream cannot be null");
+
+        YamlConfiguration config = new YamlConfiguration();
+
+        try {
+            config.load(reader);
+        } catch (IOException | InvalidConfigurationException ex) {
+            Logger.getLogger().error(ex);
+        }
+
+        return config;
+    }
+
     @Override
     public String saveToString() {
         yamlOptions.setIndent(options().indent());
@@ -43,7 +125,7 @@ public class YamlConfiguration extends FileConfiguration {
 
         Map<?, ?> input;
         try {
-            input = (Map<?, ?>) yaml.load(contents);
+            input = yaml.load(contents);
         } catch (YAMLException e) {
             throw new InvalidConfigurationException(e);
         } catch (ClassCastException e) {
@@ -56,7 +138,7 @@ public class YamlConfiguration extends FileConfiguration {
         }
 
         if (input != null) {
-            convertMapsToSections(input, (ConfigurationSection) this);
+            convertMapsToSections(input, this);
         }
     }
 
@@ -147,88 +229,5 @@ public class YamlConfiguration extends FileConfiguration {
         }
 
         return (YamlConfigurationOptions) options;
-    }
-
-    /**
-     * Creates a new {@link YamlConfiguration}, loading from the given file.
-     * <p>
-     * Any errors loading the Configuration will be logged and then ignored.
-     * If the specified input is not a valid config, a blank config will be
-     * returned.
-     * <p>
-     * The encoding used may follow the system dependent default.
-     *
-     * @param file Input file
-     * @return Resulting configuration
-     * @throws IllegalArgumentException Thrown if file is null
-     */
-    public static YamlConfiguration loadConfiguration(File file) {
-        Validate.notNull(file, "File cannot be null");
-
-        YamlConfiguration config = new YamlConfiguration();
-
-        try {
-            config.load(file);
-        } catch (FileNotFoundException ex) {
-        } catch (IOException | InvalidConfigurationException ex) {
-            System.err.println(ex);
-        }
-
-        return config;
-    }
-
-    /**
-     * Creates a new {@link YamlConfiguration}, loading from the given stream.
-     * <p>
-     * Any errors loading the Configuration will be logged and then ignored.
-     * If the specified input is not a valid config, a blank config will be
-     * returned.
-     *
-     * @param stream Input stream
-     * @return Resulting configuration
-     * @throws IllegalArgumentException Thrown if stream is null
-     * @deprecated does not properly consider encoding
-     * @see #load(InputStream)
-     * @see #loadConfiguration(Reader)
-     */
-    @Deprecated
-    public static YamlConfiguration loadConfiguration(InputStream stream) {
-        Validate.notNull(stream, "Stream cannot be null");
-
-        YamlConfiguration config = new YamlConfiguration();
-
-        try {
-            config.load(stream);
-        } catch (IOException | InvalidConfigurationException ex) {
-            Logger.getLogger().error(ex);
-        }
-
-        return config;
-    }
-
-
-    /**
-     * Creates a new {@link YamlConfiguration}, loading from the given reader.
-     * <p>
-     * Any errors loading the Configuration will be logged and then ignored.
-     * If the specified input is not a valid config, a blank config will be
-     * returned.
-     *
-     * @param reader input
-     * @return resulting configuration
-     * @throws IllegalArgumentException Thrown if stream is null
-     */
-    public static YamlConfiguration loadConfiguration(Reader reader) {
-        Validate.notNull(reader, "Stream cannot be null");
-
-        YamlConfiguration config = new YamlConfiguration();
-
-        try {
-            config.load(reader);
-        } catch (IOException | InvalidConfigurationException ex) {
-            Logger.getLogger().error(ex);
-        }
-
-        return config;
     }
 }
