@@ -1,5 +1,7 @@
-package de.tjorven.serverdownloader.page;
+package de.tjorven.serverdownloader.page.general;
 
+import de.tjorven.serverdownloader.page.bungee.BungeeCordSetupPage;
+import de.tjorven.serverdownloader.page.server.ProptertiesPage;
 import de.tjorven.serverdownloader.utils.SDPanel;
 import de.tjorven.serverdownloader.utils.Util;
 import de.tjorven.serverdownloader.utils.logger.Logger;
@@ -11,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,6 +24,7 @@ public class SetupPage extends SDPanel implements ActionListener {
         super("Select Java Version", before);
         JButton selectButton = new JButton("Next");
         selectButton.addActionListener(this);
+        Util.javas = new ArrayList<>();
         selectButton.setBounds(40, 500, 400, 30);
         selectButton.setEnabled(false);
         add(selectButton);
@@ -32,8 +36,10 @@ public class SetupPage extends SDPanel implements ActionListener {
                 Files.list(new File(System.getProperty("java.home") + "/../").toPath()).forEach(file -> fileList.put(file.getFileName().toFile().getName(), file.toString()));
             else
                 Files.list(new File("C:/Program Files/Java/").toPath()).forEach(file -> {
-                    if (file.toFile().exists())
+                    if (file.toFile().exists()) {
                         fileList.put(file.getFileName().toFile().getName(), file.toString());
+                        Util.javas.add(file.toAbsolutePath().toString());
+                    }
                 });
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -43,8 +49,10 @@ public class SetupPage extends SDPanel implements ActionListener {
             if (Files.isDirectory(new File(System.getProperty("user.home") + "/.jdks/").toPath())) {
                 Files.list(new File(System.getProperty("user.home") + "/.jdks/").toPath()).forEach(file -> {
                     if (!file.toString().endsWith(".intellij"))
-                        if (file.toFile().exists())
+                        if (file.toFile().exists()) {
                             fileList.put(file.getFileName().toFile().getName(), file.toString());
+                            Util.javas.add(file.toAbsolutePath().toString());
+                        }
                 });
             }
         } catch (IOException ignored) {
@@ -71,9 +79,12 @@ public class SetupPage extends SDPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        System.out.println(Util.versionSelected);
         if (!(Util.versionSelected.equalsIgnoreCase("BungeeCord") || Util.versionSelected.equalsIgnoreCase("Waterfall"))) {
-            if (e.getActionCommand().equals("Next"))
+            if (e.getActionCommand().equals("Next")) {
+                Util.versionType = "bungeecord";
                 new ProptertiesPage(this);
+            }
         } else
             new BungeeCordSetupPage(this);
     }

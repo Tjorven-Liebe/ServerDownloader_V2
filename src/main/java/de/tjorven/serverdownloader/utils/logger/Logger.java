@@ -16,7 +16,7 @@ public class Logger {
     private static String date;
 
     public Logger() {
-        date = ConsoleColor.fromTag("§3") + new SimpleDateFormat("hh:mm:ss").format(Calendar.getInstance().getTime());
+        date = ConsoleColor.fromTag("§a") + new SimpleDateFormat("hh:mm:ss").format(Calendar.getInstance().getTime());
     }
 
     public static Logger getLogger() {
@@ -36,7 +36,7 @@ public class Logger {
 
     public void info(String... string) {
         for (String toLog : string)
-            System.out.println(ConsoleColor.fromTag(date + " §r[§1INFO§r] §r" + toLog));
+            System.out.println(ConsoleColor.fromTag(date + " §r[§2INFO§r] §r" + toLog));
     }
 
     public void warn(String... string) {

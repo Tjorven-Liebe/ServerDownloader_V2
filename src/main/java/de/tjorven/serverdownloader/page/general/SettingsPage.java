@@ -1,4 +1,4 @@
-package de.tjorven.serverdownloader.page;
+package de.tjorven.serverdownloader.page.general;
 
 import com.formdev.flatlaf.intellijthemes.FlatGradiantoDeepOceanIJTheme;
 import com.formdev.flatlaf.intellijthemes.FlatGradiantoMidnightBlueIJTheme;

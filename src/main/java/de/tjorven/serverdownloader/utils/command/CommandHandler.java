@@ -1,16 +1,12 @@
 package de.tjorven.serverdownloader.utils.command;
 
+import de.tjorven.serverdownloader.command.CreateBungeeCommand;
 import de.tjorven.serverdownloader.command.CreateCommand;
 import de.tjorven.serverdownloader.command.HelpCommand;
 import de.tjorven.serverdownloader.command.InfoCommand;
 import de.tjorven.serverdownloader.utils.logger.Logger;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.attribute.PosixFilePermission;
-import java.nio.file.attribute.PosixFilePermissions;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -32,6 +28,7 @@ public class CommandHandler {
             register(new CreateCommand(), "create");
             register(new InfoCommand(), "info");
             register(new HelpCommand(), "help");
+            register(new CreateBungeeCommand(), "createbungee");
             if (!commands.contains(label)) {
                 Logger.getLogger().error("Unknown command! Type \"help\" for help.");
             }

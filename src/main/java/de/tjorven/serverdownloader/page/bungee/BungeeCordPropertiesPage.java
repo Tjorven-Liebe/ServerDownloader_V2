@@ -1,6 +1,8 @@
-package de.tjorven.serverdownloader.page;
+package de.tjorven.serverdownloader.page.bungee;
 
+import de.tjorven.serverdownloader.page.general.EndPage;
 import de.tjorven.serverdownloader.utils.SDPanel;
+import de.tjorven.serverdownloader.utils.Util;
 import de.tjorven.serverdownloader.utils.logger.Logger;
 
 import javax.swing.*;
@@ -15,21 +17,22 @@ public class BungeeCordPropertiesPage extends SDPanel implements ActionListener 
         JButton selectButton = new JButton("Next");
         selectButton.addActionListener(this);
         selectButton.setBounds(40, 500, 400, 30);
-        selectButton.setEnabled(false);
         add(selectButton);
 
         JLabel serverPortLabel = new JLabel("BungeeCord Port", SwingConstants.LEFT);
-        serverPortLabel.setBounds(40, 100, 90, 30);
+        serverPortLabel.setBounds(40, 100, 100, 30);
         add(serverPortLabel);
         bungeePort = new JTextField("25565");
-        bungeePort.setBounds(140, 100, 300, 30);
+        bungeePort.setBounds(160, 100, 320, 30);
         add(bungeePort);
+
         JLabel tabList = new JLabel("Tablist", SwingConstants.LEFT);
         tabList.setBounds(40, 150, 90, 30);
         add(tabList);
+
         JComboBox<String> jComboBox = new JComboBox<>(new String[]{"GLOBAL_PING", "GLOBAL", "SERVER"});
         jComboBox.setSelectedIndex(2);
-        jComboBox.setBounds(140, 150, 300, 30);
+        jComboBox.setBounds(160, 150, 320, 30);
         add(jComboBox);
 
         updateUI();
@@ -38,6 +41,7 @@ public class BungeeCordPropertiesPage extends SDPanel implements ActionListener 
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        Util.versionType = "bungeecord";
+        new EndPage(this);
     }
 }

@@ -1,5 +1,6 @@
-package de.tjorven.serverdownloader.page;
+package de.tjorven.serverdownloader.page.server;
 
+import de.tjorven.serverdownloader.page.general.EndPage;
 import de.tjorven.serverdownloader.utils.SDPanel;
 import de.tjorven.serverdownloader.utils.Util;
 import de.tjorven.serverdownloader.utils.logger.Logger;
@@ -100,6 +101,7 @@ public class ProptertiesPage extends SDPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Next")) {
+            Util.versionType = "server";
             Util.serverPort = Integer.parseInt(serverPort.getText());
             Util.maxPlayers = Integer.parseInt(maxPlayers.getText());
             Util.motd = motd.getText();

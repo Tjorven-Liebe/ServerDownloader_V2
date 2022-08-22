@@ -1,4 +1,4 @@
-package de.tjorven.serverdownloader.page;
+package de.tjorven.serverdownloader.page.general;
 
 import de.tjorven.serverdownloader.utils.SDPanel;
 import de.tjorven.serverdownloader.utils.TextBubbleBorder;
@@ -8,8 +8,6 @@ import de.tjorven.serverdownloader.utils.logger.Logger;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -86,7 +84,7 @@ public class StartPage extends SDPanel {
         }
         selectButton.addActionListener(event -> {
             if (checkBox.isSelected()) {
-                Util.downloadServer = "http://37.114.47.90/files/serverfiles";
+                Util.downloadServer = "https://tjorven-liebe.de/files/serverfiles";
             } else {
                 Util.downloadServer = downloadServer.getText();
                 configuration.set("downloadserver", Util.downloadServer);
@@ -101,7 +99,7 @@ public class StartPage extends SDPanel {
             Logger.getLogger().info("Using downloadserver: " + Util.downloadServer);
         });
         updateUI();
-        Logger.getLogger().info(" StartPage loaded");
+        Logger.getLogger().info("StartPage loaded");
     }
 
 }

@@ -1,4 +1,4 @@
-package de.tjorven.serverdownloader.page;
+package de.tjorven.serverdownloader.page.general;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -21,7 +21,8 @@ public class VersionPage extends SDPanel implements ActionListener {
     public VersionPage(SDPanel lastPage) {
         super("Select a Version", lastPage);
 
-        List<String> files = new ArrayList<>();
+        Util.files = new ArrayList<>();
+        List<String> files = Util.files;
         HashMap<String, String> keys = new HashMap<>();
         try {
             Gson gson = new Gson();

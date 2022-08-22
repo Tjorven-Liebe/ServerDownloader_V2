@@ -1,9 +1,8 @@
 package de.tjorven.serverdownloader;
 
-import de.tjorven.serverdownloader.page.StartPage;
+import de.tjorven.serverdownloader.page.general.StartPage;
 import de.tjorven.serverdownloader.utils.Util;
 import de.tjorven.serverdownloader.utils.command.CommandHandler;
-import de.tjorven.serverdownloader.utils.logger.Logger;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,6 +24,7 @@ public class ServerDownloader extends JFrame {
                  UnsupportedLookAndFeelException e) {
             throw new RuntimeException(e);
         }
+
         setSize(500, 600);
         setTitle("ServerDownloader");
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/spigot-og.png")));
